@@ -66,10 +66,15 @@ const rollTwentySidedDie = twentySidedDie.addEventListener('click', function(){
 
 const hitReset = resetButton.addEventListener('click', function(){
   console.log('reset');
-  sixes = [];
-  doubleSixes = [];
-  twelves = [];
-  twenties = [];
+  sixes.length = 0;
+  doubleSixes.length = 0;
+  twelves.length = 0;
+  twenties.lenghth = 0;
+  sixSidedDie.src = 'images/start/d6.png';
+  dblSixSidedDieOne.src = 'images/start/d6.png';
+  dblSixSidedDieTwo.src = 'images/start/d6.png';
+  twelveSidedDie.src = 'images/start/d12.jpeg';
+  twentySidedDie.src = 'images/start/d20.jpg';
 });
 
 /******************
