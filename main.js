@@ -30,6 +30,62 @@ let twentyMean = document.querySelector('#d20-rolls-mean');
 let twentyMedain = document.querySelector('#d20-rolls-median');
 let twentyMode = document.querySelector('#d20-rolls-mode');
 
+let sixObj = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+};
+
+let dblSixObj = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+};
+
+let twelveObj = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0
+};
+
+let twentyObj = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0,
+  13: 0,
+  14: 0,
+  15: 0,
+  16: 0,
+  17: 0,
+  18: 0,
+  19: 0,
+  20: 0
+};
+
 /********************
  * HELPER FUNCTIONS *
 ********************/
@@ -55,37 +111,49 @@ const sortByNumber = function(arr) {
 }
 
 const mySortArr = function(arr){
-  console.log('the arr at the beginning of mySortArr Func')
-  console.log(arr);
-  let lower = arr[0];
-  console.log('setting arr[0] to lowest ... ');
-  console.log(lower);
-  for (let i = 1; i < arr.length; i++){
+  let sortArr = arr;
+  console.log('the sort arr at the beginning of mySortArr Func')
+  console.log(sortArr);
+  let previousNum = sortArr[0];
+  let currentNum = sortArr[1];
+  console.log('setting arr[0] to previous num ... ');
+  console.log(previousNum);
+  console.log('setting arr[1] to current num ... ')
+  console.log(currentNum);
+  for (let i = 1; i < sortArr.length; i++){
+    currentNum = sortArr[i];
+    previousNum = sortArr[i-1];
+    console.log('the sort array is');
+    console.log(sortArr);
     console.log('iteration');
     console.log(i);
-    console.log('lower =');
-    console.log(lower);
-    console.log('arr[i] =')
-    console.log(arr[i]);
-    if (lower > arr[i]){
-      console.log('now push VAR lower');
-      console.log(lower);
-      console.log('to the last item in the array')
-      arr.push(lower);
-      console.log(arr);
-      console.log('now remove lower which is the item at i - 1');
-      console.log(arr[i-1]);
-      arr.splice(i-1, 1);
-      console.log('ok now what does my ARR look like?');
-      console.log(arr);
-      mySortArr(arr);
+    console.log('previous num =');
+    console.log(previousNum);
+    console.log('current num = ')
+    console.log(currentNum);
+    if (previousNum > currentNum){
+
+      console.log('***Previous Num IS GREATER THAN Current Num**');
+      console.log('Previous Num is ');
+      console.log(previousNum);
+      console.log('Current Num is ');
+      console.log(sortArr[i]);
+      
+      console.log('We need to move the current num back 1 and the previous num forward 1');
+      sortArr[i-1] = currentNum;
+      sortArr[i] = previousNum;
+      console.log('now the sort array looks like')
+      console.sortArr;
+      
+      console.log('now use recurssion')
+      mySortArr(sortArr);
     } else {
-      lower = arr[i];
+     console.log('all good, next iteration');
     }
   }
   console.log('my Sort Func: ')
-  console.log(arr);
-  return arr;
+  console.log(sortArr);
+  return sortArr;
 }
 
 const intialize = function(){
@@ -147,15 +215,42 @@ const getMedianOfArr = function(arr){
   }
 }
 
+const getMode = function(obj){
+  let mode = [0];
+  let highestCount = 1;
+  for (num in obj){
+    let value = obj[num]
+    console.log('num (key) of obj in for loop');
+    console.log(num);
+    console.log('value of obj in get mode for loop');
+    console.log(value);
+    if (value > highestCount){
+      mode = [];
+      mode.push(num);
+      highestCount = value;
+    } else if (value === highestCount){
+      mode.push(num);
+    }
+  }
+  if (highestCount === 1){
+    return 'N/A';
+  } else {
+    return mode.join(', ');
+  }
+  
+}
+
+const resetGlobalObj = function(obj){
+  for (num in obj){
+    obj[num] = 0;
+  }
+}
+
 /*******************
  * YOUR CODE BELOW *
  *******************/
 
 intialize();
-
-
-
-
 
 /*******************
  * EVENT LISTENERS *
@@ -169,11 +264,14 @@ const rollSixSidedDie = sixSidedDie.addEventListener('click', function(){
 
   //Math
   sixes.push(num);
+  sixObj[num] += 1;
   console.log('the six sided die array')
   console.log(sixes);
+  console.log('six obj');
+  console.log(sixObj);
   sixSidedMean.innerText = getMeanOfArr(sixes);
   sixSidedMedian.innerText = getMedianOfArr(sixes);
-
+  sixSidedMode.innerText = getMode(sixObj);
 });
 
 const rollDblSixSidedDieOne = dblSixSidedDieOne.addEventListener('click', function(){
@@ -190,7 +288,11 @@ const rollDblSixSidedDieOne = dblSixSidedDieOne.addEventListener('click', functi
   console.log(sum);
 
   doubleSixes.push(sum);
+  dblSixObj[num1] += 1;
+  dblSixObj[num2] += 1;
   dblSixMean.innerText = getMeanOfArr(doubleSixes);
+  dblSixMedian.innerText = getMedianOfArr(doubleSixes);
+  dblSixMode.innerText = getMode(dblSixObj);
 });
 
 const rollDblSixSidedDieTwo = dblSixSidedDieTwo.addEventListener('click', function(){
@@ -207,7 +309,11 @@ const rollDblSixSidedDieTwo = dblSixSidedDieTwo.addEventListener('click', functi
   console.log(sum);
 
   doubleSixes.push(sum);
+  dblSixObj[num1] += 1;
+  dblSixObj[num2] += 1;
   dblSixMean.innerText = getMeanOfArr(doubleSixes);
+  dblSixMedian.innerText = getMedianOfArr(doubleSixes);
+  dblSixMode.innerText = getMode(dblSixObj);
 });
 
 const rollTwelveSidedDie = twelveSidedDie.addEventListener('click', function(){
@@ -216,7 +322,10 @@ const rollTwelveSidedDie = twelveSidedDie.addEventListener('click', function(){
   setTwelveAndTwentDieImg(twelveSidedDie, num);
 
   twelves.push(num);
+  twelveObj[num] += 1;
   twelveMean.innerText = getMeanOfArr(twelves);
+  twelveMedian.innerText = getMedianOfArr(twelves);
+  twelveMode.innerText = getMode(twelveObj);
 });
 
 const rollTwentySidedDie = twentySidedDie.addEventListener('click', function(){
@@ -225,12 +334,16 @@ const rollTwentySidedDie = twentySidedDie.addEventListener('click', function(){
   setTwelveAndTwentDieImg(twentySidedDie, num);
 
   twenties.push(num);
+  twentyObj[num] += 1;
   twentyMean.innerText = getMeanOfArr(twenties);
+  twentyMedain.innerText = getMedianOfArr(twenties);
+  twentyMode.innerText = getMode(twentyObj);
 });
 
 const hitReset = resetButton.addEventListener('click', function(){
   console.log('reset');
   resetGlobalArr();
+  resetGlobalObj();
   intialize();
 });
 
@@ -257,6 +370,10 @@ const resetGlobalArr = function(){
   doubleSixes.length = 0;
   twelves.length = 0;
   twenties.length = 0;
+  resetGlobalObj(sixObj);
+  resetGlobalObj(dblSixObj);
+  resetGlobalObj(twelveObj);
+  resetGlobalObj(twentyObj)
 }
 
 /****************
